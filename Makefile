@@ -3,7 +3,7 @@ REPORTER = spec
 
 all:
 
-test: test-node test-browser test-local-node test-local-browser test-normalization-node test-normalization-browser
+test: test-node test-browser test-local-node test-local-browser test-normalization-node test-normalization-browser test-meteor-integration
 
 test-suite: test-suite-node test-suite-browser
 
@@ -49,6 +49,13 @@ test-normalization-node:
 test-normalization-browser:
 	@JSONLD_TEST_SUITE=../normalization/tests $(MAKE) test-suite-browser
 
+test-meteor-integration:
+	type meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }
+	npm install spacejam
+	cp ./meteor/package.js ./package.js
+	./node_modules/.bin/spacejam test-packages ./
+	rm ./package.js
+
 test-coverage:
 	./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- \
 		-u exports -R $(REPORTER) $(TESTS)
@@ -56,4 +63,4 @@ test-coverage:
 clean:
 	rm -rf coverage
 
-.PHONY: test test-node test-browser test-local-node test-local-browser test-normalization-node test-normalization-browser test-coverage clean
+.PHONY: test test-node test-browser test-local-node test-local-browser test-normalization-node test-normalization-browser test-meteor-integration test-coverage clean
