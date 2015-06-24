@@ -53,7 +53,7 @@ test-meteor-integration:
 	type meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }
 	npm install spacejam
 	cp ./meteor/package.js ./package.js
-	./node_modules/.bin/spacejam test-packages ./
+	PATH=~.meteor:$$PATH ./node_modules/.bin/spacejam test-packages ./
 	rm ./package.js
 
 test-coverage:
