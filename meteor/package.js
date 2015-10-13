@@ -19,6 +19,7 @@ Package.onUse(function (api) {
 Package.onTest(function (api) {
   api.use('digitalbazaar:jsonld');
   api.use('tinytest');
+  api.use('es5-shim');
 
   api.addFiles([
     'meteor/test.js'
